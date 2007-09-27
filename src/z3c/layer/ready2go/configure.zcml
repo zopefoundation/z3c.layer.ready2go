@@ -1,0 +1,12 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="z3c">
+
+  <interface
+      interface="z3c.layer.ready2go.IReady2GoBrowserLayer"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      />
+
+</configure>

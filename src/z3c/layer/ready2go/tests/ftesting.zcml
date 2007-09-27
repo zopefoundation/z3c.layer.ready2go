@@ -1,0 +1,93 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:meta="http://namespaces.zope.org/meta"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="zope">
+
+  <!-- meta configure -->
+  <include package="zope.i18n" file="meta.zcml" />
+  <include package="zope.app.component" file="meta.zcml" />
+  <include package="zope.app.component.browser" file="meta.zcml" />
+  <include package="zope.app.pagetemplate" file="meta.zcml" />
+  <include package="zope.app.publication" file="meta.zcml" />
+  <include package="zope.app.publisher" file="meta.zcml" />
+  <include package="zope.app.security" file="meta.zcml" />
+  <include package="zope.app.securitypolicy" file="meta.zcml" />
+  <include package="z3c.pagelet" file="meta.zcml" />
+  <include package="z3c.template" file="meta.zcml" />
+
+  <!-- zope core component -->
+  <include package="zope.annotation" />
+  <include package="zope.app.appsetup" />
+  <include package="zope.app.component" />
+  <include package="zope.app.container" />
+  <include package="zope.app.error" />
+  <include package="zope.app.http.exception" />
+  <include package="zope.app.i18n" />
+  <include package="zope.app.publication" />
+  <include package="zope.app.publisher.browser" />
+  <include package="zope.app.security" />
+  <include package="zope.app.securitypolicy" />
+  <include package="zope.app.session" />
+  <include package="zope.app.twisted" />
+  <include package="zope.app.wsgi" />
+  <include package="zope.component" />
+  <include package="zope.contentprovider" />
+  <include package="zope.location" />
+  <include package="zope.publisher" />
+  <include package="zope.traversing" />
+  <include package="zope.traversing.browser" />
+  <include package="zope.viewlet" />
+
+  <!-- security policy -->
+  <securityPolicy
+      component="zope.app.securitypolicy.zopepolicy.ZopeSecurityPolicy"
+      />
+
+  <role id="zope.Manager" title="Manager" />
+  <grantAll role="zope.Manager" />
+  <grantAll role="zope.Anonymous" />
+
+  <principal
+      id="zope.manager"
+      title="Manager"
+      login="Manager"
+      password="password"
+      />
+
+  <grant
+      role="zope.Manager"
+      principal="zope.manager"
+      />
+
+  <!-- z3c component -->
+  <include package="z3c.pagelet" />
+  <include package="z3c.layer.pagelet" />
+  <include package="z3c.layer.ready2go" />
+
+  <!-- test skin -->
+  <configure package="z3c.layer.ready2go.tests">
+    <interface
+        interface="z3c.layer.ready2go.tests.ITestSkin"
+        type="zope.publisher.interfaces.browser.IBrowserSkinType"
+        name="TestSkin"
+        />
+
+    <z3c:pagelet
+        for="*"
+        name="page.html"
+        permission="zope.ManageContent"
+        class=".TestPage"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        />
+
+    <z3c:template
+        for=".TestPage"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        template="page.pt"
+        />
+
+  </configure>
+
+</configure>
