@@ -56,9 +56,6 @@ setup (
             'zope.app.testing',
             'zope.app.zcmlfiles',
             'zope.app.twisted',
-            'zope.viewlet',
-            'z3c.pagelet',
-            'z3c.form'
             ],
         ),
     install_requires = [
@@ -67,9 +64,10 @@ setup (
         'zope.traversing',
         'zope.app.http',
         'zope.app.publisher',
-        'zope.viewlet',
         'z3c.pagelet',
-        'z3c.form'
+        'z3c.layer.pagelet',
+        'z3c.form',
+        'z3c.formui',
         ],
     zip_safe = False,
 )
