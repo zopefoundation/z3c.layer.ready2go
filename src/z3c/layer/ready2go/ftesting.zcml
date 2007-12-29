@@ -1,0 +1,25 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:meta="http://namespaces.zope.org/meta"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    i18n_domain="zope">
+
+  <!-- use z3c.layer.pagelet as base config -->
+  <include package="z3c.layer.pagelet.tests" file="ftesting.zcml"/>
+
+  <!-- load additional configuration -->
+  <include package="zope.viewlet" file="meta.zcml" />
+
+  <include package="z3c.macro" file="meta.zcml" />
+  <include package="z3c.form" file="meta.zcml" />
+  <include package="z3c.form" />
+  <include package="z3c.formui" />
+
+  <interface
+      interface="z3c.layer.ready2go.tests.IReady2GoTestSkin"
+      type="zope.publisher.interfaces.browser.IBrowserSkinType"
+      name="Ready2GoTestSkin"
+      />
+
+</configure>

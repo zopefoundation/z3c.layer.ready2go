@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2007 Zope Foundation and Contributors.
+# Copyright (c) 2005 Zope Foundation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -12,18 +12,36 @@
 #
 ##############################################################################
 """
-$Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
+$Id: tests.py 82519 2007-12-29 00:55:45Z rogerineichen $
 """
-
+import re
 import unittest
+from zope.testing import renormalizing
 from zope.app.testing import functional
 
-functional.defineLayer('TestLayer', 'ftesting.zcml')
+import z3c.layer.ready2go
+
+layer = functional.defineLayer('TestLayer', 'ftesting.zcml')
+
+
+class IReady2GoTestSkin(z3c.layer.ready2go.IReady2GoBrowserLayer):
+    """The ready2go layer test skin."""
+
+
+def getRootFolder():
+    return functional.FunctionalTestSetup().getRootFolder()
 
 
 def test_suite():
     suite = unittest.TestSuite()
-    s = functional.FunctionalDocFileSuite('../README.txt')
+
+    s = functional.FunctionalDocFileSuite(
+        'README.txt',
+        globs={'getRootFolder': getRootFolder},
+        checker = renormalizing.RENormalizing([
+            (re.compile(r'httperror_seek_wrapper:', re.M), 'HTTPError:'),
+            ])
+        )
     s.layer = TestLayer
     suite.addTest(s)
 

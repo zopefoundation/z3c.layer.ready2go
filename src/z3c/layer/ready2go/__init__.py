@@ -21,6 +21,5 @@ import z3c.formui.interfaces
 
 
 class IReady2GoBrowserLayer(z3c.layer.pagelet.IPageletBrowserLayer,
-    z3c.formui.interfaces.IDivFormLayer,
-    z3c.form.interfaces.IFormLayer):
+    z3c.formui.interfaces.IDivFormLayer, z3c.form.interfaces.IFormLayer):
     """A ready 2 go layer useful for custom applications."""

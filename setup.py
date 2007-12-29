@@ -66,6 +66,7 @@ setup (
         'zope.app.http',
         'zope.app.publisher',
         'z3c.pagelet',
+        'z3c.viewlet',
         'z3c.layer.pagelet',
         'z3c.form',
         'z3c.formui',
