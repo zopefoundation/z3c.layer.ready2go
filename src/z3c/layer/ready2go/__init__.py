@@ -15,6 +15,7 @@
 $Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
 """
 
+from zope.viewlet.interfaces import IViewletManager
 import z3c.layer.pagelet
 import z3c.form.interfaces
 import z3c.formui.interfaces
@@ -23,3 +24,20 @@ import z3c.formui.interfaces
 class IReady2GoBrowserLayer(z3c.layer.pagelet.IPageletBrowserLayer,
     z3c.formui.interfaces.IDivFormLayer, z3c.form.interfaces.IFormLayer):
     """A ready 2 go layer useful for custom applications."""
+
+
+class ICSS(IViewletManager):
+    """CSS viewlet manager."""
+
+
+class IJavaScript(IViewletManager):
+    """JavaScript viewlet manager."""
+
+
+class IBreadcrumb(IViewletManager):
+    """Breadcrumb viewlet manager."""
+
+
+class ISideBar(IViewletManager):
+    """SideBar viewlet manager."""
+
