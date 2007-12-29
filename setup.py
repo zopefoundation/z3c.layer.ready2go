@@ -56,6 +56,7 @@ setup (
             'zope.app.testing',
             'zope.app.zcmlfiles',
             'zope.app.twisted',
+            'zc.configuration',
             ],
         ),
     install_requires = [

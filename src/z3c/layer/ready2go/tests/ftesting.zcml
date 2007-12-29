@@ -5,6 +5,28 @@
     xmlns:z3c="http://namespaces.zope.org/z3c"
     i18n_domain="zope">
 
+  <!-- load meta configuration for exclude -->
+  <include package="zc.configuration" file="meta.zcml" />
+
+  <!-- exclude will prevent from include -->
+  <exclude package="zope.app.authentication" file="ftpplugins.zcml" />
+  <exclude package="zope.app.authentication" file="groupfolder.zcml" />
+  <exclude package="zope.app.authentication" file="principalfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" />
+  <exclude package="zope.app.authentication.browser" file="configure.zcml" />
+  <exclude package="zope.app.authentication.browser" file="groupfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" file="httpplugins.zcml" />
+  <exclude package="zope.app.authentication.browser" file="principalfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" file="session.zcml" />
+  <exclude package="zope.app.broken" file="browser.zcml" />
+  <exclude package="zope.app.container.browser" />
+  <exclude package="zope.app.error.browser" />
+  <exclude package="zope.app.folder.browser" />
+  <exclude package="zope.app.i18n.browser" />
+  <exclude package="zope.app.securitypolicy.browser" />
+  <exclude package="zope.app.session" file="browser.zcml" />
+  <exclude package="zope.dublincore.browser" />
+
   <!-- meta configure -->
   <include package="zope.i18n" file="meta.zcml" />
   <include package="zope.app.component" file="meta.zcml" />
@@ -13,7 +35,7 @@
   <include package="zope.app.publication" file="meta.zcml" />
   <include package="zope.app.publisher" file="meta.zcml" />
   <include package="zope.app.security" file="meta.zcml" />
-  <include package="zope.app.securitypolicy" file="meta.zcml" />
+  <include package="zope.securitypolicy" file="meta.zcml" />
   <include package="z3c.pagelet" file="meta.zcml" />
   <include package="z3c.template" file="meta.zcml" />
 
@@ -42,7 +64,7 @@
 
   <!-- security policy -->
   <securityPolicy
-      component="zope.app.securitypolicy.zopepolicy.ZopeSecurityPolicy"
+      component="zope.securitypolicy.zopepolicy.ZopeSecurityPolicy"
       />
 
   <role id="zope.Manager" title="Manager" />

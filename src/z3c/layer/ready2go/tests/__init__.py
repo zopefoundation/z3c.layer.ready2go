@@ -17,9 +17,6 @@ $Id: __init__.py 97 2007-03-29 22:58:27Z rineichen $
 
 import zope.interface
 import zope.component
-from zope.publisher.browser import BrowserPage
-from zope.security.interfaces import Unauthorized
-from zope.exceptions.interfaces import UserError
 
 from z3c.pagelet import browser
 import z3c.layer.ready2go
