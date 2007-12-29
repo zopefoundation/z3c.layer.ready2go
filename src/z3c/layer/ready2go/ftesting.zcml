@@ -5,21 +5,157 @@
     xmlns:z3c="http://namespaces.zope.org/z3c"
     i18n_domain="zope">
 
-  <!-- use z3c.layer.pagelet as base config -->
-  <include package="z3c.layer.pagelet.tests" file="ftesting.zcml"/>
+  <!-- load meta configuration for exclude -->
+  <include package="zc.configuration" file="meta.zcml" />
 
-  <!-- load additional configuration -->
+  <!-- exclude will prevent from include -->
+  <exclude package="zope.app.authentication" file="ftpplugins.zcml" />
+  <exclude package="zope.app.authentication" file="groupfolder.zcml" />
+  <exclude package="zope.app.authentication" file="principalfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" />
+  <exclude package="zope.app.authentication.browser" file="configure.zcml" />
+  <exclude package="zope.app.authentication.browser" file="groupfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" file="httpplugins.zcml" />
+  <exclude package="zope.app.authentication.browser" file="principalfolder.zcml" />
+  <exclude package="zope.app.authentication.browser" file="session.zcml" />
+  <exclude package="zope.app.broken" file="browser.zcml" />
+  <exclude package="zope.app.container.browser" />
+  <exclude package="zope.app.error.browser" />
+  <exclude package="zope.app.folder.browser" />
+  <exclude package="zope.app.i18n.browser" />
+  <exclude package="zope.app.securitypolicy.browser" />
+  <exclude package="zope.app.session" file="browser.zcml" />
+  <exclude package="zope.dublincore.browser" />
+
+  <!-- meta configure -->
+  <include package="zope.i18n" file="meta.zcml" />
+  <include package="zope.app.component" file="meta.zcml" />
+  <include package="zope.app.component.browser" file="meta.zcml" />
+  <include package="zope.app.pagetemplate" file="meta.zcml" />
+  <include package="zope.app.publication" file="meta.zcml" />
+  <include package="zope.app.publisher" file="meta.zcml" />
+  <include package="zope.app.security" file="meta.zcml" />
+  <include package="zope.securitypolicy" file="meta.zcml" />
   <include package="zope.viewlet" file="meta.zcml" />
 
+
+  <!-- 3rd party meta configure -->
+  <include package="z3c.pagelet" file="meta.zcml" />
+  <include package="z3c.template" file="meta.zcml" />
+
+
+  <!-- zope core component -->
+  <include package="zope.annotation" />
+  <include package="zope.app.appsetup" />
+  <include package="zope.app.component" />
+  <include package="zope.app.container" />
+  <include package="zope.app.error" />
+  <include package="zope.app.http.exception" />
+  <include package="zope.app.i18n" />
+  <include package="zope.app.publication" />
+  <include package="zope.app.publisher.browser" />
+  <include package="zope.app.security" />
+  <include package="zope.app.securitypolicy" />
+  <include package="zope.app.session" />
+  <include package="zope.app.twisted" />
+  <include package="zope.app.wsgi" />
+  <include package="zope.component" />
+  <include package="zope.contentprovider" />
+  <include package="zope.location" />
+  <include package="zope.publisher" />
+  <include package="zope.traversing" />
+  <include package="zope.traversing.browser" />
+  <include package="zope.viewlet" />
+
+
+  <!-- z3c component -->
+  <include package="z3c.pagelet" />
+  <include package="z3c.layer.pagelet" />
   <include package="z3c.macro" file="meta.zcml" />
   <include package="z3c.form" file="meta.zcml" />
   <include package="z3c.form" />
   <include package="z3c.formui" />
 
+
+  <!-- test pages taken from z3c.layer.pagelet package -->
+  <configure package="z3c.layer.pagelet.tests">
+    <z3c:layout
+        for="*"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        template="template.pt"
+        />
+
+    <z3c:pagelet
+        for="*"
+        name="page.html"
+        permission="zope.ManageContent"
+        class=".TestPage"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        />
+
+    <z3c:template
+        for=".TestPage"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        template="page.pt"
+        />
+
+    <browser:page
+        for="*"
+        name="forbidden.html"
+        permission="zope.View"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        class=".UnauthorizedPage"
+        />
+
+    <browser:page
+        for="*"
+        name="usererror.html"
+        permission="zope.View"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        class=".UserErrorPage"
+        />
+
+    <browser:page
+        for="*"
+        name="systemerror.html"
+        permission="zope.View"
+        layer="z3c.layer.pagelet.IPageletBrowserLayer"
+        class=".SystemErrorPage"
+        />
+  </configure>
+
+
+  <!-- test skin -->
   <interface
       interface="z3c.layer.ready2go.tests.IReady2GoTestSkin"
       type="zope.publisher.interfaces.browser.IBrowserSkinType"
       name="Ready2GoTestSkin"
       />
+
+
+  <!-- security policy -->
+  <securityPolicy
+      component="zope.securitypolicy.zopepolicy.ZopeSecurityPolicy"
+      />
+
+  <role
+      id="zope.Manager"
+      title="Manager"
+      />
+
+  <principal
+      id="zope.manager"
+      title="Manager"
+      login="Manager"
+      password="password"
+      />
+
+  <grant
+      role="zope.Manager"
+      principal="zope.manager"
+      />
+
+  <grantAll role="zope.Manager" />
+  <grantAll role="zope.Anonymous" />
 
 </configure>
