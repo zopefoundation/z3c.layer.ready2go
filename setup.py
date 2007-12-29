@@ -23,7 +23,7 @@ def read(*rnames):
 
 setup (
     name='z3c.layer.ready2go',
-    version='0.5.0',
+    version='0.5.0dev',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope3-dev@zope.org",
     description = "A ready to go layer for Zope3",
