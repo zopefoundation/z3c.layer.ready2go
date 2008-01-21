@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-Version 0.5.0dev (unreleased)
+Version 0.5.0 (2007-01-21)
 --------------------------
 
 - Initial Release

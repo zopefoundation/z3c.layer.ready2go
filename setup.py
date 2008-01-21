@@ -23,7 +23,7 @@ def read(*rnames):
 
 setup (
     name='z3c.layer.ready2go',
-    version='0.5.0dev',
+    version='0.5.0',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope3-dev@zope.org",
     description = "A ready to go layer for Zope3",
@@ -65,11 +65,14 @@ setup (
         'zope.traversing',
         'zope.app.http',
         'zope.app.publisher',
+        'z3c.form',
+        'z3c.formui',
         'z3c.pagelet',
         'z3c.viewlet',
         'z3c.layer.pagelet',
         'z3c.form',
         'z3c.formui',
         ],
+    dependency_links = ['http://download.zope.org/distribution'],
     zip_safe = False,
 )
