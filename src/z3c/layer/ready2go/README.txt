@@ -1,35 +1,35 @@
-======
-README
-======
+===========================
+Ready-2-Go Layer for Zope 3
+===========================
 
-This package contains the ready2go layer. This layer supports a correct set of
+This package contains the `ready2go` layer. This layer supports a correct set of
 component registration and can be used for inheritation in custom skins.
 
 Important
 ---------
 
-This layer supports the z3c.pagelet and the z3c.form pattern. This means every 
-page e.g. the error page is based on the z3c.pagelet concept. By default we use 
-the Div based layout for z3c forms.
+This layer supports the ``z3c.pagelet`` and the ``z3c.form`` pattern. This
+means every page e.g. the error page is based on the ``z3c.pagelet``
+concept. By default we use the ``<div>``-based layout for z3c forms.
 
 
-IReady2GoBrowserLayer
----------------------
+``IReady2GoBrowserLayer`` Layer
+-------------------------------
 
-The ready2go layer is useful for build custom presentation skins without access
-to ZMI menus like zmi_views etc. This means there is no menu item registred if
-you use this layer.
+The `ready2go` layer is useful for build custom presentation skins without
+access to ZMI menus like ``zmi_views`` etc. This means there is no menu item
+registred if you use this layer.
 
-For more information about what this layer offers, see z3c.layer.pagelet
+For more information about what this layer offers, see ``z3c.layer.pagelet``.
 
 
 Testing
 -------
 
-For testing the IReady2GoBrowserLayer we use the testing skin defined in the
-tests package which uses the IReady2GoBrowserLayer as the only base layer.
-This means, that our testing skin provides only the views defined in the
-minimal package and it's testing views defined in tests.
+For testing the ``IReady2GoBrowserLayer`` layer we use the testing skin
+defined in the tests package which uses the ``IReady2GoBrowserLayer`` layer as
+the only base layer.  This means, that our testing skin provides only the
+views defined in the minimal package and it's testing views defined in tests.
 
 Login as manager first:
 
@@ -37,8 +37,8 @@ Login as manager first:
   >>> manager = Browser()
   >>> manager.addHeader('Authorization', 'Basic mgr:mgrpw')
 
-Check if we can access the page.html view which is registred in the
-ftesting.zcml file with our skin:
+Check if we can access the ``page.html`` view which is registred in the
+``ftesting.zcml`` file with our skin:
 
   >>> manager = Browser()
   >>> manager.addHeader('Authorization', 'Basic mgr:mgrpw')
@@ -51,8 +51,8 @@ ftesting.zcml file with our skin:
 Pagelet support
 ---------------
 
-Check if we can access the test page given from the z3c.layer.pagelet 
-ftesting.zcml configuration.
+Check if we can access the test page given from the ``z3c.layer.pagelet``
+``ftesting.zcml`` configuration.
 
   >>> print manager.contents
   <!DOCTYPE...
@@ -186,8 +186,8 @@ unregistred user (test browser) for this:
 Form and form layout support
 ----------------------------
 
-This layer offers also form macros given from z3c.formui. Let's create a simple
-form:
+This layer offers also form macros given from ``z3c.formui``. Let's create a
+simple form:
 
   >>> from z3c.form import testing
   >>> testing.setupFormDefaults()
@@ -212,7 +212,7 @@ Before we can start writing forms, we must have the content to work with:
   >>> from zope.schema.fieldproperty import FieldProperty
   >>> class Person(object):
   ...     zope.interface.implements(IPerson)
-  ... 
+  ...
   ...     name = FieldProperty(IPerson['name'])
   ...     age = FieldProperty(IPerson['age'])
   ...
@@ -256,7 +256,7 @@ Now create the form:
   >>> root = getRootFolder()
   >>> addForm = PersonAddForm(root, divRequest)
 
-Since we have not specified a template yet, we have to do this now. We use our 
+Since we have not specified a template yet, we have to do this now. We use our
 div based form template:
 
   >>> import os
@@ -276,8 +276,8 @@ Now register the form (content) template:
   ...     (zope.interface.Interface, IDivFormLayer),
   ...     IContentTemplate)
 
-And let's define a layout template which simply calls the render method. For a 
-more adavanced content/layout render concept see z3c.pagelet.
+And let's define a layout template which simply calls the render method. For a
+more adavanced content/layout render concept see ``z3c.pagelet``.
 
   >>> import tempfile
   >>> temp_dir = tempfile.mkdtemp()

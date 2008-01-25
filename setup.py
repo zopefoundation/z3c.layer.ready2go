@@ -16,19 +16,26 @@
 $Id:$
 """
 import os
+import xml.sax.saxutils
 from setuptools import setup, find_packages
 
 def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+    text = open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+    return xml.sax.saxutils.escape(text)
 
 setup (
     name='z3c.layer.ready2go',
-    version='0.5.1dev',
+    version='0.5.1',
     author = "Stephan Richter, Roger Ineichen and the Zope Community",
-    author_email = "zope3-dev@zope.org",
+    author_email = "zope-dev@zope.org",
     description = "A ready to go layer for Zope3",
     long_description=(
         read('README.txt')
+        + '\n\n' +
+        'Detailed Documentation\n'
+        '**********************'
+        + '\n\n' +
+        read('src', 'z3c', 'layer', 'ready2go', 'README.txt')
         + '\n\n' +
         read('CHANGES.txt')
         ),
@@ -44,7 +51,7 @@ setup (
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope3'],
-    url = 'http://cheeseshop.python.org/pypi/z3c.layer.ready2go',
+    url = 'http://pypi.python.org/pypi/z3c.layer.ready2go',
     packages = find_packages('src'),
     include_package_data = True,
     package_dir = {'':'src'},
@@ -73,6 +80,5 @@ setup (
         'z3c.form',
         'z3c.formui',
         ],
-    dependency_links = ['http://download.zope.org/distribution'],
     zip_safe = False,
 )
