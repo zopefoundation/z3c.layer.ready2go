@@ -2,13 +2,23 @@
 CHANGES
 =======
 
-Version 0.5.1 (2008-01-24)
---------------------------
+0.5.2 (unreleased)
+------------------
+
+- No longer depends on deprecated ``z3c.viewlet``.
+
+- Fixed tests to run with current ``z3c.form``.
+
+- Fixed long_description to render property on pypi.
+
+
+0.5.1 (2008-01-24)
+------------------
 
 - Bug: Fix meta-data.
 
 
-Version 0.5.0 (2008-01-21)
---------------------------
+0.5.0 (2008-01-21)
+------------------
 
 - Initial Release

@@ -313,11 +313,12 @@ Let's now render the page. Note the output doesn't contain the layout template:
   >>> addForm.update()
   >>> print addForm.render()
   <form action="http://127.0.0.1" method="post"
-          enctype="multipart/form-data" class="edit-form"
-          name="form" id="form">
+        enctype="multipart/form-data" class="edit-form"
+        name="form" id="form">
     <div class="viewspace">
       <div class="required-info">
-        <span class="required">*</span> &ndash; required
+        <span class="required">*</span>
+        &ndash; required
       </div>
       <div>
         <div id="form-widgets-name-row" class="row">
@@ -327,9 +328,10 @@ Let's now render the page. Note the output doesn't contain the layout template:
               <span class="required">*</span>
             </label>
           </div>
-          <div class="widget"><input type="text" id="form-widgets-name"
-                   name="form.widgets.name"
-                   class="text-widget required textline-field" value="" />
+          <div class="widget">
+            <input id="form-widgets-name" name="form.widgets.name"
+                   class="text-widget required textline-field"
+                   value="" type="text" />
           </div>
         </div>
         <div id="form-widgets-age-row" class="row">
@@ -338,18 +340,18 @@ Let's now render the page. Note the output doesn't contain the layout template:
               <span>Age</span>
             </label>
           </div>
-          <div class="widget"><input type="text" id="form-widgets-age"
-                   name="form.widgets.age" class="text-widget int-field"
-                   value="20" />
+          <div class="widget">
+            <input id="form-widgets-age" name="form.widgets.age"
+                   class="text-widget int-field"
+                   value="20" type="text" />
           </div>
         </div>
       </div>
     </div>
     <div>
       <div class="buttons">
-        <input type="submit" id="form-buttons-add"
-               name="form.buttons.add"
-               class="submit-widget button-field" value="Add" />
+        <input id="form-buttons-add" name="form.buttons.add"
+               class="submit-widget button-field" value="Add" type="submit" />
       </div>
     </div>
   </form>

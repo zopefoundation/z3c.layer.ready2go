@@ -16,17 +16,17 @@
 $Id:$
 """
 import os
-import xml.sax.saxutils
 from setuptools import setup, find_packages
 
 def read(*rnames):
-    text = open(os.path.join(os.path.dirname(__file__), *rnames)).read()
-    return xml.sax.saxutils.escape(text)
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+version = '0.5.2dev'
 
 setup (
     name='z3c.layer.ready2go',
-    version='0.5.2dev',
-    author = "Stephan Richter, Roger Ineichen and the Zope Community",
+    version=version,
+    author="Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go layer for Zope3",
     long_description=(
@@ -63,7 +63,9 @@ setup (
             'zope.app.testing',
             'zope.app.zcmlfiles',
             'zope.app.twisted',
+            'zope.app.session',
             'zc.configuration',
+            'z3c.form [test]',
             ],
         ),
     install_requires = [
@@ -75,7 +77,7 @@ setup (
         'z3c.form',
         'z3c.formui',
         'z3c.pagelet',
-        'z3c.viewlet',
+        'zope.viewlet',
         'z3c.layer.pagelet',
         'z3c.form',
         'z3c.formui',
