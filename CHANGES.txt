@@ -2,7 +2,7 @@
 CHANGES
 =======
 
-0.5.2 (unreleased)
+0.5.2 (2009-02-19)
 ------------------
 
 - No longer depends on deprecated ``z3c.viewlet``.

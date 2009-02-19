@@ -21,7 +21,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.5.2dev'
+version = '0.5.2'
 
 setup (
     name='z3c.layer.ready2go',
@@ -32,8 +32,7 @@ setup (
     long_description=(
         read('README.txt')
         + '\n\n' +
-        'Detailed Documentation\n'
-        '**********************'
+        '.. contents::\n'
         + '\n\n' +
         read('src', 'z3c', 'layer', 'ready2go', 'README.txt')
         + '\n\n' +
