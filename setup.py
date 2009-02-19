@@ -21,7 +21,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.5.2'
+version = '0.5.3 dev'
 
 setup (
     name='z3c.layer.ready2go',
