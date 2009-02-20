@@ -15,7 +15,7 @@ CHANGES
 
 - Fixed tests to run with current ``z3c.form``.
 
-- Fixed long_description to render property on pypi.
+- Fixed long_description to render properly on pypi.
 
 
 0.5.1 (2008-01-24)
