@@ -5,9 +5,6 @@
     xmlns:z3c="http://namespaces.zope.org/z3c"
     i18n_domain="zope">
 
-  <!-- load meta configuration for exclude -->
-  <include package="zc.configuration" file="meta.zcml" />
-
   <!-- exclude will prevent from include -->
   <exclude package="zope.app.authentication" file="ftpplugins.zcml" />
   <exclude package="zope.app.authentication" file="groupfolder.zcml" />
@@ -41,6 +38,8 @@
   <!-- 3rd party meta configure -->
   <include package="z3c.pagelet" file="meta.zcml" />
   <include package="z3c.template" file="meta.zcml" />
+  <include package="z3c.macro" file="meta.zcml" />
+  <include package="z3c.form" file="meta.zcml" />
 
 
   <!-- zope core component -->
@@ -70,8 +69,7 @@
   <!-- z3c component -->
   <include package="z3c.pagelet" />
   <include package="z3c.layer.pagelet" />
-  <include package="z3c.macro" file="meta.zcml" />
-  <include package="z3c.form" file="meta.zcml" />
+  <include package="z3c.macro" />
   <include package="z3c.form" />
   <include package="z3c.formui" />
 
