@@ -40,8 +40,6 @@ Login as manager first:
 Check if we can access the ``page.html`` view which is registred in the
 ``ftesting.zcml`` file with our skin:
 
-  >>> manager = Browser()
-  >>> manager.addHeader('Authorization', 'Basic mgr:mgrpw')
   >>> skinURL = 'http://localhost/++skin++Ready2GoTestSkin'
   >>> manager.open(skinURL + '/page.html')
   >>> manager.url
@@ -66,6 +64,10 @@ Check if we can access the test page given from the ``z3c.layer.pagelet``
   </body>
   </html>
   <BLANKLINE>
+
+
+Not Found
+~~~~~~~~~
 
 Now check the not found page which is a exception view on the exception
 ``zope.publisher.interfaces.INotFound``:
@@ -109,6 +111,10 @@ Now check the not found page which is a exception view on the exception
   </html>
   <BLANKLINE>
 
+
+User error
+~~~~~~~~~~
+
 And check the user error page which is a view registred for
 ``zope.exceptions.interfaces.IUserError`` exceptions:
 
@@ -127,6 +133,10 @@ And check the user error page which is a view registred for
   </body>
   </html>
   <BLANKLINE>
+
+
+Common exception (system error)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 And check error view registred for
 ``zope.interface.common.interfaces.IException``:
@@ -154,8 +164,12 @@ And check error view registred for
   </html>
   <BLANKLINE>
 
+
+Forbidden 403
+~~~~~~~~~~~~~
+
 And check the ``zope.security.interfaces.IUnauthorized`` view, use a new
-unregistred user (test browser) for this:
+unregistred user (test browser) for this.
 
   >>> unauthorized = Browser()
   >>> unauthorized.open(skinURL + '/@@forbidden.html')
@@ -165,6 +179,62 @@ unregistred user (test browser) for this:
 
   >>> print unauthorized.contents
   <!DOCTYPE ...
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  <title>PageletTestLayout</title>
+  </head>
+  <body>
+    <div>
+    <br />
+    <br />
+    <h3>Unauthorized</h3>
+    <br />
+    <b>You are not authorized.</b>
+  </div>
+  <BLANKLINE>
+  </body>
+  </html>
+  <BLANKLINE>
+
+As you can see, this test will return a 403 Forbidden error. But this is only
+because we do not have an unauthenticated principal available. See the test
+below what happens if we register an unauthenticated princiapl.
+
+
+Unauthorized 401
+~~~~~~~~~~~~~~~~
+
+If we use an authenticated principal and access the forbitten page, we will get
+a 401 Unauthorized instead of a 403 Forbidden error page.
+
+  >>> from zope.configuration import xmlconfig
+  >>> import zope.principalregistry
+  >>> def zcml(s):
+  ...     context = xmlconfig.file('meta.zcml', zope.principalregistry)
+  ...     xmlconfig.string(s, context)
+
+  >>> zcml("""
+  ...    <configure
+  ...        xmlns="http://namespaces.zope.org/zope"
+  ...        >
+  ...
+  ...      <unauthenticatedPrincipal
+  ...         id="zope.unknown"
+  ...         title="Anonymous user"
+  ...         description="A person we don't know"
+  ...         />
+  ...
+  ...    </configure>
+  ... """)
+
+  >>> manager = Browser()
+  >>> manager.open(skinURL + '/@@forbidden.html')
+  Traceback (most recent call last):
+  ...
+  HTTPError: HTTP Error 401: Unauthorized
+
+  >>> print unauthorized.contents
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
   <title>PageletTestLayout</title>
@@ -364,16 +434,18 @@ get registered correctly.
 
   >>> from zope.configuration import xmlconfig
   >>> import zope.component
+  >>> import zope.security
   >>> import zope.viewlet
-  >>> import zope.app.component
-  >>> import zope.app.publisher.browser
+  >>> import zope.browserpage
+  >>> import zope.browserresource
   >>> import z3c.macro
   >>> import z3c.template
   >>> import z3c.formui
+  >>> xmlconfig.XMLConfig('meta.zcml', zope.browserpage)()
+  >>> xmlconfig.XMLConfig('meta.zcml', zope.browserresource)()
   >>> xmlconfig.XMLConfig('meta.zcml', zope.component)()
+  >>> xmlconfig.XMLConfig('meta.zcml', zope.security)()
   >>> xmlconfig.XMLConfig('meta.zcml', zope.viewlet)()
-  >>> xmlconfig.XMLConfig('meta.zcml', zope.app.component)()
-  >>> xmlconfig.XMLConfig('meta.zcml', zope.app.publisher.browser)()
   >>> xmlconfig.XMLConfig('meta.zcml', z3c.macro)()
   >>> xmlconfig.XMLConfig('meta.zcml', z3c.template)()
   >>> xmlconfig.XMLConfig('configure.zcml', z3c.formui)()

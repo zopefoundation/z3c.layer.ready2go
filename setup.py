@@ -21,11 +21,10 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.5.4dev'
 
 setup (
     name='z3c.layer.ready2go',
-    version=version,
+    version='0.6.0',
     author="Stephan Richter, Roger Ineichen and the Zope Community",
     author_email = "zope-dev@zope.org",
     description = "A ready to go layer for Zope3",
@@ -58,27 +57,22 @@ setup (
     extras_require = dict(
         test = [
             'zope.testbrowser',
-            'zope.app.securitypolicy',
+            'zope.app.authentication',
             'zope.app.testing',
-            'zope.app.zcmlfiles',
-            'zope.app.twisted',
-            'zope.app.session',
-            'z3c.form [test]',
+            'zope.browserresource',
+            'zope.principalregistry',
+            'zope.publisher',
+            'zope.security',
+            'zope.securitypolicy',
+            'zope.testing',
             ],
         ),
     install_requires = [
         'setuptools',
-        'zope.configuration',
-        'zope.traversing',
-        'zope.app.http',
-        'zope.app.publisher',
         'z3c.form',
         'z3c.formui',
-        'z3c.pagelet',
-        'zope.viewlet',
         'z3c.layer.pagelet',
-        'z3c.form',
-        'z3c.formui',
+        'zope.viewlet',
         ],
     zip_safe = False,
 )
