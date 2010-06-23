@@ -65,6 +65,7 @@ setup (
             'zope.security',
             'zope.securitypolicy',
             'zope.testing',
+            'z3c.form [test]'
             ],
         ),
     install_requires = [

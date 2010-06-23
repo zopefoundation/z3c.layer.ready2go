@@ -387,8 +387,7 @@ Let's now render the page. Note the output doesn't contain the layout template:
         name="form" id="form">
     <div class="viewspace">
       <div class="required-info">
-        <span class="required">*</span>
-        &ndash; required
+        <span class="required">*</span>&ndash; required
       </div>
       <div>
         <div id="form-widgets-name-row" class="row">

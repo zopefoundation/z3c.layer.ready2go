@@ -55,6 +55,7 @@
   <include package="zope.session" />
   <include package="zope.site" />
   <include package="zope.traversing" />
+  <include package="zope.i18n" />
 
 
   <!-- z3c component -->
