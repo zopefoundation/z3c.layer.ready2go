@@ -18,16 +18,17 @@ $Id:$
 import os
 from setuptools import setup, find_packages
 
+
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 
-setup (
+setup(
     name='z3c.layer.ready2go',
     version='0.6.1dev',
     author="Stephan Richter, Roger Ineichen and the Zope Community",
-    author_email = "zope-dev@zope.org",
-    description = "A ready to go layer for Zope3",
+    author_email="zope-dev@zope.org",
+    description="A ready to go layer for Zope3",
     long_description=(
         read('README.txt')
         + '\n\n' +
@@ -37,9 +38,9 @@ setup (
         + '\n\n' +
         read('CHANGES.txt')
         ),
-    license = "ZPL 2.1",
-    keywords = "zope3 z3c ready 2 go layer",
-    classifiers = [
+    license="ZPL 2.1",
+    keywords="zope3 z3c ready 2 go layer",
+    classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
@@ -49,13 +50,13 @@ setup (
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope3'],
-    url = 'http://pypi.python.org/pypi/z3c.layer.ready2go',
-    packages = find_packages('src'),
-    include_package_data = True,
-    package_dir = {'':'src'},
-    namespace_packages = ['z3c'],
-    extras_require = dict(
-        test = [
+    url='http://pypi.python.org/pypi/z3c.layer.ready2go',
+    packages=find_packages('src'),
+    include_package_data=True,
+    package_dir={'': 'src'},
+    namespace_packages=['z3c'],
+    extras_require=dict(
+        test=[
             'zope.testbrowser',
             'zope.app.authentication',
             'zope.app.testing',
@@ -65,15 +66,15 @@ setup (
             'zope.security',
             'zope.securitypolicy',
             'zope.testing',
-            'z3c.form [test]'
+            'z3c.form [test]',
             ],
         ),
-    install_requires = [
+    install_requires=[
         'setuptools',
         'z3c.form',
         'z3c.formui',
         'z3c.layer.pagelet',
         'zope.viewlet',
         ],
-    zip_safe = False,
+    zip_safe=False,
 )

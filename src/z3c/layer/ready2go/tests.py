@@ -16,7 +16,6 @@ $Id: tests.py 82519 2007-12-29 00:55:45Z rogerineichen $
 """
 import re
 import unittest
-import z3c.ptcompat
 from zope.testing import renormalizing
 from zope.app.testing import functional
 
@@ -34,13 +33,12 @@ def getRootFolder():
 
 
 def test_suite():
-    z3c.ptcompat.config.disable()
     suite = unittest.TestSuite()
 
     s = functional.FunctionalDocFileSuite(
         'README.txt',
         globs={'getRootFolder': getRootFolder},
-        checker = renormalizing.RENormalizing([
+        checker=renormalizing.RENormalizing([
             (re.compile(r'httperror_seek_wrapper:', re.M), 'HTTPError:'),
             ])
         )
