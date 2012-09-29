@@ -14,6 +14,7 @@
 """
 $Id: tests.py 82519 2007-12-29 00:55:45Z rogerineichen $
 """
+import doctest
 import re
 import unittest
 from zope.testing import renormalizing
@@ -31,6 +32,11 @@ class IReady2GoTestSkin(z3c.layer.ready2go.IReady2GoBrowserLayer):
 def getRootFolder():
     return functional.FunctionalTestSetup().getRootFolder()
 
+DOCTEST_OPTION_FLAGS = (doctest.NORMALIZE_WHITESPACE|
+                        doctest.ELLIPSIS|
+                        doctest.REPORT_ONLY_FIRST_FAILURE
+                        #|doctest.REPORT_NDIFF
+                        )
 
 def test_suite():
     suite = unittest.TestSuite()
@@ -38,6 +44,7 @@ def test_suite():
     s = functional.FunctionalDocFileSuite(
         'README.txt',
         globs={'getRootFolder': getRootFolder},
+        optionflags=DOCTEST_OPTION_FLAGS,
         checker=renormalizing.RENormalizing([
             (re.compile(r'httperror_seek_wrapper:', re.M), 'HTTPError:'),
             ])

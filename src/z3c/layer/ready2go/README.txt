@@ -372,7 +372,7 @@ Now we can get our layout template:
   ...     ILayoutTemplate)
 
   >>> layout
-  <z3c.ptcompat.ViewPageTemplateFile object at ...>
+  <zope.browserpage.viewpagetemplatefile.ViewPageTemplateFile object at ...>
 
 
 DIV-based Layout
@@ -390,7 +390,7 @@ Let's now render the page. Note the output doesn't contain the layout template:
         <span class="required">*</span>&ndash; required
       </div>
       <div>
-        <div id="form-widgets-name-row" class="row">
+        <div id="form-widgets-name-row" class="row required">
           <div class="label">
             <label for="form-widgets-name">
               <span>Name</span>
@@ -424,6 +424,7 @@ Let's now render the page. Note the output doesn't contain the layout template:
       </div>
     </div>
   </form>
+
 
 Form Macros
 -----------
