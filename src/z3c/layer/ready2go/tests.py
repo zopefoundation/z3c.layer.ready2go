@@ -22,7 +22,9 @@ from zope.app.testing import functional
 
 import z3c.layer.ready2go
 
-layer = functional.defineLayer('TestLayer', 'ftesting.zcml')
+TestLayer = None # shut up pyflakes warning
+layer = functional.defineLayer('TestLayer', 'ftesting.zcml',
+                               allow_teardown=True)
 
 
 class IReady2GoTestSkin(z3c.layer.ready2go.IReady2GoBrowserLayer):
@@ -34,8 +36,7 @@ def getRootFolder():
 
 DOCTEST_OPTION_FLAGS = (doctest.NORMALIZE_WHITESPACE|
                         doctest.ELLIPSIS|
-                        doctest.REPORT_ONLY_FIRST_FAILURE
-                        #|doctest.REPORT_NDIFF
+                        doctest.REPORT_NDIFF
                         )
 
 def test_suite():

@@ -384,7 +384,7 @@ Let's now render the page. Note the output doesn't contain the layout template:
   >>> print addForm.render()
   <form action="http://127.0.0.1" method="post"
         enctype="multipart/form-data" class="edit-form"
-        name="form" id="form">
+        id="form" name="form">
     <div class="viewspace">
       <div class="required-info">
         <span class="required">*</span>&ndash; required

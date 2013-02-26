@@ -67,6 +67,7 @@ setup(
             'zope.securitypolicy',
             'zope.testing',
             'z3c.form [test]',
+            'zope.tal >= 4.0.0a1', # attribute order changes
             ],
         ),
     install_requires=[
