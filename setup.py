@@ -36,7 +36,7 @@ TESTS_REQUIRE = [
 
 setup(
     name='z3c.layer.ready2go',
-    version='1.0.0a1',
+    version='1.0.0a2.dev0',
     author="Stephan Richter, Roger Ineichen and the Zope Community",
     author_email="zope-dev@zope.org",
     description="A ready to go layer for Zope3",
