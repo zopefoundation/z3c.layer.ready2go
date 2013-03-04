@@ -33,16 +33,21 @@ views defined in the minimal package and it's testing views defined in tests.
 
 Login as manager first:
 
-  >>> from zope.testbrowser.testing import Browser
-  >>> manager = Browser()
-  >>> manager.addHeader('Authorization', 'Basic mgr:mgrpw')
+  >>> from webtest.app import TestApp
+  >>> manager = TestApp(
+  ...     make_wsgi_app(), extra_environ={
+  ...         'wsgi.handleErrors': False,
+  ...         'HTTP_AUTHORIZATION': 'Basic mgr:mgrpw'})
+  >>> err_manager = TestApp(
+  ...     make_wsgi_app(), extra_environ={
+  ...         'HTTP_AUTHORIZATION': 'Basic mgr:mgrpw'})
 
 Check if we can access the ``page.html`` view which is registred in the
 ``ftesting.zcml`` file with our skin:
 
   >>> skinURL = 'http://localhost/++skin++Ready2GoTestSkin'
-  >>> manager.open(skinURL + '/page.html')
-  >>> manager.url
+  >>> res = manager.get(skinURL + '/page.html')
+  >>> res.request.url
   'http://localhost/++skin++Ready2GoTestSkin/page.html'
 
 
@@ -52,18 +57,15 @@ Pagelet support
 Check if we can access the test page given from the ``z3c.layer.pagelet``
 ``ftesting.zcml`` configuration.
 
-  >>> print manager.contents
-  <!DOCTYPE...
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> print(res.html) #doctest: +PARSE_HTML
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
   <body>
     test page
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 
 Not Found
@@ -72,14 +74,14 @@ Not Found
 Now check the not found page which is a exception view on the exception
 ``zope.publisher.interfaces.INotFound``:
 
-  >>> manager.open(skinURL + '/foobar.html')
+  >>> manager.get(skinURL + '/foobar.html')
   Traceback (most recent call last):
   ...
-  httperror_seek_wrapper: HTTP Error 404: Not Found
+  NotFound: Object: <zope.site.folder.Folder ...>, name: 'foobar.html'
 
-  >>> print manager.contents
-  <!DOCTYPE...
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> res = err_manager.get(skinURL + '/foobar.html', status=404)
+  >>> print(res.html)
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
@@ -106,10 +108,8 @@ Now check the not found page which is a exception view on the exception
       </li>
     </ol>
   </div>
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 
 User error
@@ -118,10 +118,9 @@ User error
 And check the user error page which is a view registred for
 ``zope.exceptions.interfaces.IUserError`` exceptions:
 
-  >>> manager.open(skinURL + '/@@usererror.html')
-  >>> print manager.contents
-  <!DOCTYPE ...
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> res = err_manager.get(skinURL + '/@@usererror.html')
+  >>> print(res.html)
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
@@ -129,10 +128,8 @@ And check the user error page which is a view registred for
     <div>
     <div>simply user error</div>
   </div>
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 
 Common exception (system error)
@@ -141,10 +138,9 @@ Common exception (system error)
 And check error view registred for
 ``zope.interface.common.interfaces.IException``:
 
-  >>> manager.open(skinURL + '/@@systemerror.html')
-  >>> print manager.contents
-  <!DOCTYPE...
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> res = err_manager.get(skinURL + '/@@systemerror.html', status=500)
+  >>> print(res.html)
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
@@ -159,10 +155,8 @@ And check error view registred for
       Go back and try another URL.
     </a>
   </div>
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 
 Forbidden 403
@@ -171,15 +165,15 @@ Forbidden 403
 And check the ``zope.security.interfaces.IUnauthorized`` view, use a new
 unregistred user (test browser) for this.
 
-  >>> unauthorized = Browser()
-  >>> unauthorized.open(skinURL + '/@@forbidden.html')
+  >>> unauthorized = TestApp(make_wsgi_app())
+  >>> unauthorized.get(skinURL + '/@@forbidden.html')
   Traceback (most recent call last):
   ...
-  httperror_seek_wrapper: HTTP Error 403: Forbidden
+  AppError: Bad response: 403 Forbidden
 
-  >>> print unauthorized.contents
-  <!DOCTYPE ...
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> res = unauthorized.get(skinURL + '/@@forbidden.html', status=403)
+  >>> print(res.html)
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
@@ -191,10 +185,8 @@ unregistred user (test browser) for this.
     <br />
     <b>You are not authorized.</b>
   </div>
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 As you can see, this test will return a 403 Forbidden error. But this is only
 because we do not have an unauthenticated principal available. See the test
@@ -227,15 +219,16 @@ a 401 Unauthorized instead of a 403 Forbidden error page.
   ...    </configure>
   ... """)
 
-  >>> manager = Browser()
-  >>> manager.open(skinURL + '/@@forbidden.html')
+  >>> manager2 = TestApp(make_wsgi_app(), extra_environ={
+  ...         'wsgi.handleErrors': True})
+  >>> res = manager2.get(skinURL + '/@@forbidden.html')
   Traceback (most recent call last):
   ...
-  HTTPError: HTTP Error 401: Unauthorized
+  AppError: Bad response: 401 Unauthorized
 
-  >>> print unauthorized.contents
-  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  >>> res = manager2.get(skinURL + '/@@forbidden.html', status=401)
+  >>> print(res.html)
+  <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
   <title>PageletTestLayout</title>
   </head>
@@ -247,10 +240,8 @@ a 401 Unauthorized instead of a 403 Forbidden error page.
     <br />
     <b>You are not authorized.</b>
   </div>
-  <BLANKLINE>
   </body>
   </html>
-  <BLANKLINE>
 
 
 Form and form layout support
@@ -280,9 +271,8 @@ Before we can start writing forms, we must have the content to work with:
   ...         required=False)
 
   >>> from zope.schema.fieldproperty import FieldProperty
-  >>> class Person(object):
-  ...     zope.interface.implements(IPerson)
-  ...
+  >>> @zope.interface.implementer(IPerson)
+  ... class Person(object):
   ...     name = FieldProperty(IPerson['name'])
   ...     age = FieldProperty(IPerson['age'])
   ...
@@ -353,7 +343,8 @@ more adavanced content/layout render concept see ``z3c.pagelet``.
   >>> temp_dir = tempfile.mkdtemp()
 
   >>> myLayout = os.path.join(temp_dir, 'myLayout.pt')
-  >>> open(myLayout, 'w').write('''<html>
+  >>> with open(myLayout, 'w') as file:
+  ...     _ = file.write('''<html>
   ...   <body>
   ...     <tal:block content="structure view/render">
   ...       content
@@ -381,7 +372,7 @@ DIV-based Layout
 Let's now render the page. Note the output doesn't contain the layout template:
 
   >>> addForm.update()
-  >>> print addForm.render()
+  >>> print(addForm.render())
   <form action="http://127.0.0.1" method="post"
         enctype="multipart/form-data" class="edit-form"
         id="form" name="form">

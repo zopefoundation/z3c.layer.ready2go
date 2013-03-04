@@ -11,49 +11,43 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""
-$Id: tests.py 82519 2007-12-29 00:55:45Z rogerineichen $
+"""Ready2Go Tests
 """
 import doctest
 import re
 import unittest
-from zope.testing import renormalizing
-from zope.app.testing import functional
+from zope.app.wsgi.testlayer import BrowserLayer
 
 import z3c.layer.ready2go
+from z3c.layer.ready2go.outputchecker import OutputChecker
 
-TestLayer = None # shut up pyflakes warning
-layer = functional.defineLayer('TestLayer', 'ftesting.zcml',
-                               allow_teardown=True)
-
+TestLayer = BrowserLayer(z3c.layer.ready2go, allowTearDown=True)
 
 class IReady2GoTestSkin(z3c.layer.ready2go.IReady2GoBrowserLayer):
     """The ready2go layer test skin."""
-
 
 def getRootFolder():
     return functional.FunctionalTestSetup().getRootFolder()
 
 DOCTEST_OPTION_FLAGS = (doctest.NORMALIZE_WHITESPACE|
                         doctest.ELLIPSIS|
-                        doctest.REPORT_NDIFF
+                        doctest.IGNORE_EXCEPTION_DETAIL
                         )
 
 def test_suite():
-    suite = unittest.TestSuite()
-
-    s = functional.FunctionalDocFileSuite(
+    s = doctest.DocFileSuite(
         'README.txt',
-        globs={'getRootFolder': getRootFolder},
+        globs=dict(
+            getRootFolder=TestLayer.getRootFolder,
+            make_wsgi_app=TestLayer.make_wsgi_app),
         optionflags=DOCTEST_OPTION_FLAGS,
-        checker=renormalizing.RENormalizing([
-            (re.compile(r'httperror_seek_wrapper:', re.M), 'HTTPError:'),
+        checker=OutputChecker(patterns=[
+                # Python 3 unicode removed the "u".
+                (re.compile("u('.*?')"), r"\1"),
             ])
         )
     s.layer = TestLayer
-    suite.addTest(s)
-
-    return suite
+    return unittest.TestSuite((s,))
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')
