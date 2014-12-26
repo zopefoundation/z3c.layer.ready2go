@@ -10,3 +10,4 @@ bin
 develop-eggs
 docs
 parts
+.eggs/
