@@ -4,6 +4,7 @@ __pycache__
 src/*.egg-info
 benchmark/*.egg-info
 
+.eggs
 .installed.cfg
 .tox
 bin
