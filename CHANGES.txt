@@ -3,7 +3,7 @@ CHANGES
 =======
 
 1.0.0 (unreleased)
---------------------
+------------------
 
 - Pin Python support to 2.7, 3.5, 3.6 and PyPy.
 
