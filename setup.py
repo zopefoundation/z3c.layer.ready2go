@@ -24,6 +24,7 @@ def read(*rnames):
 
 TESTS_REQUIRE = [
     'WebTest',
+    'lxml',
     'z3c.macro',
     'zope.app.wsgi',
     'zope.browserresource',
@@ -34,8 +35,8 @@ TESTS_REQUIRE = [
     'zope.testing',
     'zope.testrunner',
     'z3c.form [test]',
-    'zope.tal >= 4.0.0', # attribute order changes
-    ]
+    'zope.tal >= 4.0.0',  # attribute order changes
+]
 
 setup(
     name='z3c.layer.ready2go',
@@ -51,26 +52,29 @@ setup(
         read('src', 'z3c', 'layer', 'ready2go', 'README.txt')
         + '\n\n' +
         read('CHANGES.txt')
-        ),
+    ),
     license="ZPL 2.1",
     keywords="zope3 z3c ready 2 go layer",
     classifiers=[
-          'Development Status :: 5 - Production/Stable',
-          'Environment :: Web Environment',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: Zope Public License',
-          'Programming Language :: Python',
-          'Programming Language :: Python :: 2',
-          'Programming Language :: Python :: 2.7',
-          'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.5',
-          'Programming Language :: Python :: 3.6',
-          'Programming Language :: Python :: Implementation :: CPython',
-          'Programming Language :: Python :: Implementation :: PyPy',
-          'Natural Language :: English',
-          'Operating System :: OS Independent',
-          'Topic :: Internet :: WWW/HTTP',
-          'Framework :: Zope :: 3'],
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Zope Public License',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Topic :: Internet :: WWW/HTTP',
+        'Framework :: Zope :: 3'],
     url='http://pypi.python.org/pypi/z3c.layer.ready2go',
     packages=find_packages('src'),
     include_package_data=True,
@@ -78,18 +82,18 @@ setup(
     namespace_packages=['z3c'],
     extras_require=dict(
         test=TESTS_REQUIRE,
-        ),
+    ),
     setup_requires=[
         'eggtestinfo',
         'zope.testrunner',
-        ],
+    ],
     install_requires=[
         'setuptools',
         'z3c.form',
         'z3c.formui',
         'z3c.layer.pagelet',
         'zope.viewlet',
-        ],
+    ],
     tests_require=TESTS_REQUIRE,
     test_suite='z3c.layer.ready2go.tests.test_suite',
     test_loader='zope.testrunner.eggsupport:SkipLayers',

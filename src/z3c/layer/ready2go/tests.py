@@ -23,16 +23,16 @@ from z3c.layer.ready2go.outputchecker import OutputChecker
 
 TestLayer = BrowserLayer(z3c.layer.ready2go, allowTearDown=True)
 
+
 class IReady2GoTestSkin(z3c.layer.ready2go.IReady2GoBrowserLayer):
     """The ready2go layer test skin."""
 
-def getRootFolder():
-    return functional.FunctionalTestSetup().getRootFolder()
 
-DOCTEST_OPTION_FLAGS = (doctest.NORMALIZE_WHITESPACE|
-                        doctest.ELLIPSIS|
+DOCTEST_OPTION_FLAGS = (doctest.NORMALIZE_WHITESPACE |
+                        doctest.ELLIPSIS |
                         doctest.IGNORE_EXCEPTION_DETAIL
                         )
+
 
 def test_suite():
     s = doctest.DocFileSuite(
@@ -42,12 +42,9 @@ def test_suite():
             make_wsgi_app=TestLayer.make_wsgi_app),
         optionflags=DOCTEST_OPTION_FLAGS,
         checker=OutputChecker(patterns=[
-                # Python 3 unicode removed the "u".
-                (re.compile("u('.*?')"), r"\1"),
-            ])
-        )
+            # Python 3 unicode removed the "u".
+            (re.compile("u('.*?')"), r"\1"),
+        ])
+    )
     s.layer = TestLayer
     return unittest.TestSuite((s,))
-
-if __name__ == '__main__':
-    unittest.main(defaultTest='test_suite')
