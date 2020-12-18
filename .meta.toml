@@ -13,3 +13,8 @@ with-sphinx-doctests = false
 
 [coverage]
 fail-under = 78
+
+[github-actions]
+additional-install = [
+    "sudo apt-get install libxml2-dev libxslt-dev",
+    ]
