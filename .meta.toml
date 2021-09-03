@@ -2,14 +2,14 @@
 # https://github.com/zopefoundation/meta/tree/master/config/pure-python
 [meta]
 template = "pure-python"
-commit-id = "8aa79d6c1f088715e2c4f06f47da3f531d794d60"
+commit-id = "d3627ba9bcb25d0c7cb09b96d695040a20e0ab2b"
 
 [python]
-with-appveyor = false
 with-pypy = true
 with-legacy-python = true
-with-docs = false
 with-sphinx-doctests = false
+with-windows = false
+with-future-python = false
 
 [coverage]
 fail-under = 78
@@ -17,4 +17,13 @@ fail-under = 78
 [github-actions]
 additional-install = [
     "sudo apt-get install libxml2-dev libxslt-dev",
+    ]
+
+[tox]
+use-flake8 = true
+
+[manifest]
+additional-rules = [
+    "recursive-include src *.txt",
+    "recursive-include src *.zcml",
     ]

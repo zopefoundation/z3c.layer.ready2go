@@ -40,7 +40,7 @@ TESTS_REQUIRE = [
 
 setup(
     name='z3c.layer.ready2go',
-    version='1.0.1.dev0',
+    version='1.1.dev0',
     author="Stephan Richter, Roger Ineichen and the Zope Community",
     author_email="zope-dev@zope.org",
     description="A ready to go layer for Zope3",
@@ -83,10 +83,6 @@ setup(
     extras_require=dict(
         test=TESTS_REQUIRE,
     ),
-    setup_requires=[
-        'eggtestinfo',
-        'zope.testrunner',
-    ],
     install_requires=[
         'setuptools',
         'z3c.form',
@@ -94,8 +90,5 @@ setup(
         'z3c.layer.pagelet',
         'zope.viewlet',
     ],
-    tests_require=TESTS_REQUIRE,
-    test_suite='z3c.layer.ready2go.tests.test_suite',
-    test_loader='zope.testrunner.eggsupport:SkipLayers',
     zip_safe=False,
 )
