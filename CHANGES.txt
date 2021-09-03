@@ -2,10 +2,12 @@
 CHANGES
 =======
 
-1.0.1 (unreleased)
-------------------
+1.1 (unreleased)
+----------------
 
 - Add support for Python 3.7, 3.8 and 3.9.
+
+- Drop support to run the tests via ``python setup.py test``.
 
 
 1.0.0 (2017-04-17)
