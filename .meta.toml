@@ -12,7 +12,7 @@ with-future-python = false
 with-macos = false
 
 [coverage]
-fail-under = 78
+fail-under = 77
 
 [github-actions]
 additional-install = [

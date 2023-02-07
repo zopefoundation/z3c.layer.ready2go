@@ -44,7 +44,7 @@ setup(
     name='z3c.layer.ready2go',
     version='2.0.dev0',
     author="Stephan Richter, Roger Ineichen and the Zope Community",
-    author_email="zope-dev@zope.org",
+    author_email="zope-dev@zope.dev",
     description="A ready to go layer for Zope3",
     long_description=(
         read('README.txt')
@@ -80,7 +80,8 @@ setup(
     packages=find_packages('src'),
     include_package_data=True,
     package_dir={'': 'src'},
-    namespace_packages=['z3c'],
+    namespace_packages=['z3c', 'z3c.layer'],
+    python_requires='>=3.7',
     extras_require=dict(
         test=TESTS_REQUIRE,
     ),

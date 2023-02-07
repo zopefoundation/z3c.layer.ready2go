@@ -14,7 +14,6 @@
 """Ready2Go Tests
 """
 import doctest
-import re
 import unittest
 
 from zope.app.wsgi.testlayer import BrowserLayer
@@ -43,10 +42,7 @@ def test_suite():
             getRootFolder=TestLayer.getRootFolder,
             make_wsgi_app=TestLayer.make_wsgi_app),
         optionflags=DOCTEST_OPTION_FLAGS,
-        checker=OutputChecker(patterns=[
-            # Python 3 unicode removed the "u".
-            (re.compile("u('.*?')"), r"\1"),
-        ])
+        checker=OutputChecker()
     )
     s.layer = TestLayer
     return unittest.TestSuite((s,))
