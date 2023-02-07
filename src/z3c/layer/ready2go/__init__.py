@@ -13,10 +13,10 @@
 ##############################################################################
 """Ready2Go Browser Layer
 """
-from zope.viewlet.interfaces import IViewletManager
-import z3c.layer.pagelet
 import z3c.form.interfaces
 import z3c.formui.interfaces
+import z3c.layer.pagelet
+from zope.viewlet.interfaces import IViewletManager
 
 
 class IReady2GoBrowserLayer(

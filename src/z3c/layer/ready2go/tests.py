@@ -16,10 +16,12 @@
 import doctest
 import re
 import unittest
+
 from zope.app.wsgi.testlayer import BrowserLayer
 
 import z3c.layer.ready2go
 from z3c.layer.ready2go.outputchecker import OutputChecker
+
 
 TestLayer = BrowserLayer(z3c.layer.ready2go, allowTearDown=True)
 
